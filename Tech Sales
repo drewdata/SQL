@@ -1,0 +1,37 @@
+SELECT customers.acctnum, customers.order_id, Febsales.Product
+FROM customers
+JOIN FebSales
+ON customers.order_id=Febsales.orderID;
+
+SELECT * FROM customers, FebSales
+WHERE customers.order_id=Febsales.orderID
+
+SELECT * FROM customers
+JOIN FebSales
+on FebSales.orderID=customers.order_id;
+
+/*What was the cheapest product sold in January and what was the price?
+
+SELECT min(DISTINCT price), Product
+FROM JanSales
+
+/* Total revenue for each product sold in Jan? # of products sold and the price of each product. 
+
+SELECT Product, sum(Quantity*price) as Revenue
+FROM JanSales
+Group by Product
+
+/* Which products were sold in Feb at 548 Lincoln St, Seattle, WA 98101. Quantity sold? total revenue?
+
+Select product, quantity,location, sum(Quantity*price) as Revenue
+from FebSales
+where location LIKE '%548 Lincoln St%'
+group by location
+
+/* How many customers ordered more than 2 products at a time in Feb and what was the avg amount spent by them?
+
+SELECT count(customers.acctnum), avg(quantity*price) 
+FROM FebSales
+LEFT JOIN customers
+ON Febsales.orderid=customers.order_id
+WHERE FebSales.Quantity>2
