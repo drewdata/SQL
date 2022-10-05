@@ -35,3 +35,44 @@ FROM FebSales
 LEFT JOIN customers
 ON Febsales.orderid=customers.order_id
 WHERE FebSales.Quantity>2
+
+
+/* Which locations in New York received at least 3 orders in January, and how many orders did they each receive?
+
+SELECT distinct location, count(orderID)
+FROM BIT_DB.JanSales
+WHERE location LIKE '%NY%'
+GROUP BY location
+HAVING count(orderID)>2
+
+/* How many of each type of headphone were sold in February?
+
+SELECT sum(Quantity) AS Quantity, Product
+FROM FebSales
+WHERE Product LIKE '%Headphones%'
+GROUP BY product
+
+/*What was the average amount spent per account in February? (Hints: For this question, we want the average amount spent / number of accounts, not the amount spent by each account. 
+    To multiply, you can use the * symbol, and to divide, you can use the / symbol.)
+
+SELECT avg(quantity*price)
+FROM FebSales
+JOIN customers
+WHERE customers.order_id=FebSales.orderID
+
+
+/* What was the average quantity of products purchased per account in February?
+
+SELECT sum(quantity)/count(customers.acctnum) As Avg_per_account
+FROM FebSales
+JOIN customerS
+WHERE customers.order_id=Febsales.orderID
+
+/*Which product brought in the most revenue in January and how much revenue did it bring in total? 
+
+SELECT product, sum(quantity*price)
+FROM FebSales
+GROUP BY product
+ORDER BY sum(quantity*price) DESC
+LIMIT 1
+
